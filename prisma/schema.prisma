@@ -1,0 +1,197 @@
+// Prisma schema - Multiplic Imoveis
+// MySQL
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum PapelUsuario {
+  ADMIN
+  CORRETOR
+}
+
+model Usuario {
+  id             String       @id @default(cuid())
+  nome           String
+  email          String       @unique
+  senhaHash      String
+  papel          PapelUsuario @default(CORRETOR)
+  codigoReferencia String     @unique // usado no link de divulgacao (?c=codigo)
+  ativo          Boolean      @default(true)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  leads          Lead[]
+
+  @@index([codigoReferencia])
+}
+
+model Imovel {
+  id            String   @id @default(cuid())
+  titulo        String
+  descricao     String?  @db.Text
+  endereco      String
+  cidade        String
+  estado        String   @db.VarChar(2)
+  cep           String?  @db.VarChar(10)
+  preco         Decimal  @db.Decimal(12, 2)
+  moeda         String   @default("BRL") @db.VarChar(3)
+  tipo          String   // Casa, Apartamento, Terreno, etc.
+  quartos       Int      @default(0)
+  suites        Int      @default(0)
+  banheiros     Int      @default(0)
+  areaUtil      Decimal? @db.Decimal(10, 2)
+  areaTotal     Decimal  @db.Decimal(10, 2)
+  vagas         Int      @default(0)
+  destaque      Boolean  @default(false)
+  disponivel    Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  imagens         ImagemImovel[]
+  caracteristicas ImovelCaracteristica[]
+  leads           Lead[]
+
+  @@index([tipo])
+  @@index([cidade])
+  @@index([destaque])
+  @@index([disponivel])
+}
+
+model ImagemImovel {
+  id        String   @id @default(cuid())
+  url       String   @db.Text
+  ordem     Int      @default(0)
+  imovelId  String
+  imovel    Imovel   @relation(fields: [imovelId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@index([imovelId])
+  @@index([imovelId, ordem])
+}
+
+model Caracteristica {
+  id        String @id @default(cuid())
+  nome      String @unique
+  icone     String?
+  imoveis   ImovelCaracteristica[]
+}
+
+model ImovelCaracteristica {
+  id               String         @id @default(cuid())
+  imovelId         String
+  caracteristicaId String
+  imovel           Imovel         @relation(fields: [imovelId], references: [id], onDelete: Cascade)
+  caracteristica   Caracteristica @relation(fields: [caracteristicaId], references: [id], onDelete: Cascade)
+
+  @@unique([imovelId, caracteristicaId])
+}
+
+enum StatusEmpreendimento {
+  PROJETO_NA_PLANTA
+  EM_CONSTRUCAO
+  ENTREGUE
+}
+
+model Empreendimento {
+  id            String               @id @default(cuid())
+  nome          String               // ex: "V Tower Boggiani"
+  slug          String               @unique
+  cidade        String
+  pais          String               @default("Paraguai")
+  status        StatusEmpreendimento @default(EM_CONSTRUCAO)
+  descricaoPt   String?              @db.Text
+  descricaoEs   String?              @db.Text
+  destaque      Boolean              @default(false)
+  publicado     Boolean              @default(false)
+  createdAt     DateTime             @default(now())
+  updatedAt     DateTime             @updatedAt
+
+  unidades      Unidade[]
+  materiais     MaterialEmpreendimento[]
+  leads         Lead[]
+
+  @@index([cidade])
+  @@index([publicado])
+}
+
+enum StatusUnidade {
+  DISPONIVEL
+  RESERVADA
+  VENDIDA
+}
+
+model Unidade {
+  id               String         @id @default(cuid())
+  empreendimentoId String
+  empreendimento   Empreendimento @relation(fields: [empreendimentoId], references: [id], onDelete: Cascade)
+  codigo           String         // ex: "7D1"
+  andar            Int?
+  tipo             String         // Mono, 1 Dormitorio, 2 Dormitorios...
+  areaTotal        Decimal        @db.Decimal(10, 2)
+  preco            Decimal        @db.Decimal(12, 2)
+  moeda            String         @default("USD") @db.VarChar(3)
+  status           StatusUnidade  @default(DISPONIVEL)
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+
+  @@unique([empreendimentoId, codigo])
+  @@index([status])
+}
+
+enum TipoMaterial {
+  BROCHURE
+  RENDER
+  VIDEO
+  MEMORIA_DESCRITIVA
+  PLANILHA_PRECOS
+}
+
+model MaterialEmpreendimento {
+  id               String         @id @default(cuid())
+  empreendimentoId String
+  empreendimento   Empreendimento @relation(fields: [empreendimentoId], references: [id], onDelete: Cascade)
+  tipo             TipoMaterial
+  url              String         @db.Text
+  nomeArquivo      String
+  publico          Boolean        @default(false) // true = aparece na vitrine publica (ex: renders); false = so na area do corretor
+  ordem            Int            @default(0)
+  createdAt        DateTime       @default(now())
+
+  @@index([empreendimentoId])
+  @@index([empreendimentoId, tipo])
+}
+
+enum OrigemLead {
+  SITE_BR
+  SITE_PY
+  WHATSAPP
+}
+
+model Lead {
+  id               String          @id @default(cuid())
+  nome             String
+  telefone         String
+  email            String?
+  mensagem         String?         @db.Text
+  origem           OrigemLead      @default(SITE_BR)
+  atendido         Boolean         @default(false)
+  createdAt        DateTime        @default(now())
+
+  imovelId         String?
+  imovel           Imovel?         @relation(fields: [imovelId], references: [id], onDelete: SetNull)
+
+  empreendimentoId String?
+  empreendimento   Empreendimento? @relation(fields: [empreendimentoId], references: [id], onDelete: SetNull)
+
+  corretorId       String?
+  corretor         Usuario?        @relation(fields: [corretorId], references: [id], onDelete: SetNull)
+
+  @@index([atendido])
+  @@index([corretorId])
+}
