@@ -1,8 +1,5 @@
 import type { Metadata } from "next";
 import { Montserrat, Faustina } from "next/font/google";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
-import { WhatsAppButton } from "@/components/WhatsAppButton";
 import "./globals.css";
 
 // Fonte oficial da marca (Gotham) e paga; Montserrat usada como substituta
@@ -30,12 +27,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="pt-BR"
       className={`${montserrat.variable} ${faustina.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
-        <WhatsAppButton />
-      </body>
+      <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );
 }

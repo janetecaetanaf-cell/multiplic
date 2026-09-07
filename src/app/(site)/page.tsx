@@ -31,7 +31,7 @@ export default function Home() {
             Multiplic Imóveis
           </p>
           <h1 className="mt-4 max-w-2xl font-heading text-4xl font-bold leading-tight text-white sm:text-5xl">
-            Imóveis no Brasil e empreendimentos no Paraguai, em um só lugar
+            Imóveis no Brasil e no Paraguai, tudo em um só lugar
           </h1>
           <p className="mt-6 max-w-xl text-lg text-white/70">
             Encontre o imóvel ideal em Brasília e região, ou invista em

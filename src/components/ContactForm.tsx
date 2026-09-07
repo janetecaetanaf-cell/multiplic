@@ -12,9 +12,19 @@ export function ContactForm() {
 
   const podeEnviar = nome.trim() !== "" && telefone.trim() !== "";
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!podeEnviar) return;
+
+    // Salva o lead no painel admin e, em paralelo, abre o WhatsApp com a
+    // mensagem pronta - o corretor recebe pelos dois caminhos.
+    fetch("/api/leads", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ nome, telefone, mensagem }),
+    }).catch(() => {
+      // Falha ao salvar o lead nao deve impedir o contato via WhatsApp.
+    });
 
     const texto = `Olá! Meu nome é ${nome} (${telefone}).\n${mensagem || "Gostaria de mais informações sobre os imóveis."}`;
     window.open(linkWhatsapp(texto), "_blank", "noopener,noreferrer");
