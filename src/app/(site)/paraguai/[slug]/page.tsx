@@ -1,9 +1,9 @@
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getEmpreendimentoPorSlug, precoAPartir } from "@/lib/paraguai-data";
 import { formatarPreco } from "@/lib/format";
 import { UnidadesDisponiveis } from "@/components/UnidadesDisponiveis";
+import { GaleriaEmpreendimento } from "@/components/GaleriaEmpreendimento";
 
 const STATUS_LABEL: Record<string, string> = {
   PROJETO_NA_PLANTA: "Projeto na planta",
@@ -28,34 +28,10 @@ export default async function EmpreendimentoPage({
     <div>
       {/* Galeria */}
       <section className="bg-brand-gray">
-        {renders.length > 0 ? (
-          <div className="relative h-[50vh] w-full">
-            <Image
-              src={renders[0].url}
-              alt={empreendimento.nome}
-              fill
-              priority
-              className="object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-brand-gray/80 via-transparent to-transparent" />
-          </div>
-        ) : (
-          <div className="flex h-[30vh] items-center justify-center">
-            <svg viewBox="0 0 24 24" className="h-16 w-16 text-white/30" fill="currentColor">
-              <path d="M12 3 2 11h3v9h5v-6h4v6h5v-9h3z" />
-            </svg>
-          </div>
-        )}
-
-        {renders.length > 1 && (
-          <div className="mx-auto grid max-w-7xl grid-cols-4 gap-2 px-6 pb-6 lg:px-8">
-            {renders.slice(1, 5).map((r) => (
-              <div key={r.id} className="relative h-24 overflow-hidden rounded-lg">
-                <Image src={r.url} alt="" fill className="object-cover" />
-              </div>
-            ))}
-          </div>
-        )}
+        <GaleriaEmpreendimento
+          imagens={renders.map((r) => r.url)}
+          nome={empreendimento.nome}
+        />
       </section>
 
       <div className="mx-auto max-w-4xl px-6 py-12 lg:px-8">
@@ -83,7 +59,9 @@ export default async function EmpreendimentoPage({
         )}
 
         {empreendimento.descricaoPt && (
-          <p className="mt-6 max-w-2xl text-brand-gray/70">{empreendimento.descricaoPt}</p>
+          <p className="mt-6 max-w-2xl whitespace-pre-line text-brand-gray/70">
+            {empreendimento.descricaoPt}
+          </p>
         )}
 
         <div className="mt-10">
