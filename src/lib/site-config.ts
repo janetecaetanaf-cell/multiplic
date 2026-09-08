@@ -1,7 +1,7 @@
-// Dados de contato reais ainda pendentes - ajustar antes de publicar.
 export const siteConfig = {
   nome: "Multiplic Imóveis",
-  telefoneWhatsapp: "556199999999", // TODO: confirmar numero real (DDI+DDD+numero, sem simbolos)
+  // WhatsApp da Joana (dona da Multiplic, responsavel pelos atendimentos)
+  telefoneWhatsapp: "5561984219241",
   email: "contato@multiplicimoveis.com.br", // TODO: confirmar email real
   instagram: "https://instagram.com/multiplicimoveis", // TODO: confirmar
   cidadeBase: "Brasília - DF",

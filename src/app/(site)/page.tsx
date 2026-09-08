@@ -43,13 +43,13 @@ export default function Home() {
               href="/imoveis"
               className="rounded-full bg-brand-red px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-red-dark"
             >
-              Ver imóveis no Brasil
+              Ver em Brasília e Região
             </Link>
             <Link
               href="/paraguai"
               className="rounded-full border border-white/30 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/10"
             >
-              Ver empreendimentos no Paraguai
+              Ver no Paraguai
             </Link>
           </div>
         </div>
