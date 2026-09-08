@@ -3,10 +3,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { PARAGUAI_ATIVO } from "@/lib/config";
 
 const NAV_LINKS = [
   { href: "/imoveis", label: "Imóveis no Brasil" },
-  { href: "/paraguai", label: "Empreendimentos no Paraguai" },
+  ...(PARAGUAI_ATIVO ? [{ href: "/paraguai", label: "Empreendimentos no Paraguai" }] : []),
   { href: "/sobre", label: "Sobre" },
   { href: "/contato", label: "Contato" },
 ];

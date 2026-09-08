@@ -1,6 +1,8 @@
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { DevelopmentCard } from "@/components/DevelopmentCard";
 import { getEmpreendimentosPublicados, precoAPartir } from "@/lib/paraguai-data";
+import { PARAGUAI_ATIVO } from "@/lib/config";
 
 export const revalidate = 0;
 
@@ -9,6 +11,8 @@ export const metadata = {
 };
 
 export default async function ParaguaiPage() {
+  if (!PARAGUAI_ATIVO) notFound();
+
   const empreendimentos = await getEmpreendimentosPublicados();
 
   return (

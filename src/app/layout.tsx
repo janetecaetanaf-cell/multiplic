@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Montserrat, Faustina } from "next/font/google";
+import { PARAGUAI_ATIVO } from "@/lib/config";
 import "./globals.css";
 
 // Fonte oficial da marca (Gotham) e paga; Montserrat usada como substituta
@@ -18,7 +19,9 @@ const faustina = Faustina({
 
 export const metadata: Metadata = {
   title: "Multiplic Imóveis",
-  description: "Imóveis para venda no Brasil e empreendimentos no Paraguai.",
+  description: PARAGUAI_ATIVO
+    ? "Imóveis para venda no Brasil e empreendimentos no Paraguai."
+    : "Imóveis para venda em Brasília e região.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

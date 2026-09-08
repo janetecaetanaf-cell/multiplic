@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { siteConfig } from "@/lib/site-config";
+import { PARAGUAI_ATIVO } from "@/lib/config";
 
 export function Footer() {
   return (
@@ -16,8 +17,9 @@ export function Footer() {
               className="h-14 w-14"
             />
             <p className="mt-4 max-w-xs text-sm text-white/70">
-              Imóveis à venda no Brasil e empreendimentos no Paraguai, com
-              atendimento próximo do início ao fim.
+              {PARAGUAI_ATIVO
+                ? "Imóveis à venda no Brasil e empreendimentos no Paraguai, com atendimento próximo do início ao fim."
+                : "Imóveis à venda em Brasília e região, com atendimento próximo do início ao fim."}
             </p>
           </div>
 
@@ -27,7 +29,9 @@ export function Footer() {
             </h3>
             <ul className="mt-4 space-y-2 text-sm">
               <li><Link href="/imoveis" className="text-white/80 hover:text-white">Imóveis no Brasil</Link></li>
-              <li><Link href="/paraguai" className="text-white/80 hover:text-white">Empreendimentos no Paraguai</Link></li>
+              {PARAGUAI_ATIVO && (
+                <li><Link href="/paraguai" className="text-white/80 hover:text-white">Empreendimentos no Paraguai</Link></li>
+              )}
               <li><Link href="/sobre" className="text-white/80 hover:text-white">Sobre a Multiplic</Link></li>
               <li><Link href="/contato" className="text-white/80 hover:text-white">Contato</Link></li>
             </ul>

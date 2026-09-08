@@ -3,6 +3,7 @@ import { PropertyCard } from "@/components/PropertyCard";
 import { DevelopmentCard } from "@/components/DevelopmentCard";
 import { getImoveisPublicados } from "@/lib/imoveis-data";
 import { getEmpreendimentosPublicados, precoAPartir } from "@/lib/paraguai-data";
+import { PARAGUAI_ATIVO } from "@/lib/config";
 
 // Sempre busca dados atuais - imoveis/empreendimentos cadastrados no
 // admin precisam aparecer no site sem esperar um novo deploy.
@@ -13,10 +14,15 @@ const DIFERENCIAIS = [
     titulo: "Atendimento próximo",
     texto: "Acompanhamento direto com um corretor, do primeiro contato até a assinatura.",
   },
-  {
-    titulo: "Parceria internacional",
-    texto: "Representação exclusiva de empreendimentos da Vierci Development no Paraguai.",
-  },
+  PARAGUAI_ATIVO
+    ? {
+        titulo: "Parceria internacional",
+        texto: "Representação exclusiva de empreendimentos da Vierci Development no Paraguai.",
+      }
+    : {
+        titulo: "Conhecimento local",
+        texto: "Anos de experiência no mercado imobiliário de Brasília e região.",
+      },
   {
     titulo: "Curadoria de imóveis",
     texto: "Cada imóvel anunciado é verificado e documentado antes de ir ao ar.",
@@ -24,7 +30,9 @@ const DIFERENCIAIS = [
 ];
 
 export default async function Home() {
-  const empreendimentos = (await getEmpreendimentosPublicados()).slice(0, 4);
+  const empreendimentos = PARAGUAI_ATIVO
+    ? (await getEmpreendimentosPublicados()).slice(0, 4)
+    : [];
   const imoveis = (await getImoveisPublicados()).slice(0, 3);
 
   return (
@@ -39,12 +47,14 @@ export default async function Home() {
             Multiplic Imóveis
           </p>
           <h1 className="mt-4 max-w-2xl font-heading text-4xl font-bold leading-tight text-white sm:text-5xl">
-            Imóveis no Brasil e no Paraguai, tudo em um só lugar
+            {PARAGUAI_ATIVO
+              ? "Imóveis no Brasil e no Paraguai, tudo em um só lugar"
+              : "Seu imóvel ideal em Brasília e região"}
           </h1>
           <p className="mt-6 max-w-xl text-lg text-white/70">
-            Encontre o imóvel ideal em Brasília e região, ou invista em
-            lançamentos imobiliários no Paraguai com o respaldo de uma
-            parceria internacional.
+            {PARAGUAI_ATIVO
+              ? "Encontre o imóvel ideal em Brasília e região, ou invista em lançamentos imobiliários no Paraguai com o respaldo de uma parceria internacional."
+              : "Encontre o imóvel ideal em Brasília e região com o acompanhamento de um corretor de confiança."}
           </p>
           <div className="mt-10 flex flex-wrap gap-4">
             <Link
@@ -53,12 +63,14 @@ export default async function Home() {
             >
               Ver em Brasília e Região
             </Link>
-            <Link
-              href="/paraguai"
-              className="rounded-full border border-white/30 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/10"
-            >
-              Ver no Paraguai
-            </Link>
+            {PARAGUAI_ATIVO && (
+              <Link
+                href="/paraguai"
+                className="rounded-full border border-white/30 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/10"
+              >
+                Ver no Paraguai
+              </Link>
+            )}
           </div>
         </div>
       </section>
@@ -112,52 +124,54 @@ export default async function Home() {
       </section>
 
       {/* Empreendimentos Paraguai */}
-      <section className="bg-brand-gray py-20">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-widest text-brand-red">
-                Paraguai
-              </p>
-              <h2 className="mt-2 font-heading text-3xl font-bold text-white">
-                Empreendimentos em parceria com a Vierci Development
-              </h2>
-              <p className="mt-3 max-w-2xl text-white/60">
-                Lançamentos e obras em andamento em Assunção, Encarnación,
-                Ciudad del Este e outras cidades do Paraguai.
-              </p>
+      {PARAGUAI_ATIVO && (
+        <section className="bg-brand-gray py-20">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="flex flex-wrap items-end justify-between gap-4">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-widest text-brand-red">
+                  Paraguai
+                </p>
+                <h2 className="mt-2 font-heading text-3xl font-bold text-white">
+                  Empreendimentos em parceria com a Vierci Development
+                </h2>
+                <p className="mt-3 max-w-2xl text-white/60">
+                  Lançamentos e obras em andamento em Assunção, Encarnación,
+                  Ciudad del Este e outras cidades do Paraguai.
+                </p>
+              </div>
+              <Link
+                href="/paraguai"
+                className="text-sm font-semibold text-white hover:text-white/70"
+              >
+                Ver todos os empreendimentos →
+              </Link>
             </div>
-            <Link
-              href="/paraguai"
-              className="text-sm font-semibold text-white hover:text-white/70"
-            >
-              Ver todos os empreendimentos →
-            </Link>
-          </div>
 
-          {empreendimentos.length > 0 ? (
-            <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {empreendimentos.map((emp) => (
-                <DevelopmentCard
-                  key={emp.slug}
-                  empreendimento={{
-                    slug: emp.slug,
-                    nome: emp.nome,
-                    cidade: emp.cidade,
-                    status: emp.status,
-                    capaUrl: emp.materiais[0]?.url,
-                    precoAPartir: precoAPartir(emp),
-                  }}
-                />
-              ))}
-            </div>
-          ) : (
-            <p className="mt-10 text-white/60">
-              Em breve, novos empreendimentos publicados aqui.
-            </p>
-          )}
-        </div>
-      </section>
+            {empreendimentos.length > 0 ? (
+              <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                {empreendimentos.map((emp) => (
+                  <DevelopmentCard
+                    key={emp.slug}
+                    empreendimento={{
+                      slug: emp.slug,
+                      nome: emp.nome,
+                      cidade: emp.cidade,
+                      status: emp.status,
+                      capaUrl: emp.materiais[0]?.url,
+                      precoAPartir: precoAPartir(emp),
+                    }}
+                  />
+                ))}
+              </div>
+            ) : (
+              <p className="mt-10 text-white/60">
+                Em breve, novos empreendimentos publicados aqui.
+              </p>
+            )}
+          </div>
+        </section>
+      )}
 
       {/* Diferenciais */}
       <section className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
@@ -183,8 +197,9 @@ export default async function Home() {
             Procurando um imóvel específico?
           </h2>
           <p className="mx-auto mt-3 max-w-xl text-brand-gray/70">
-            Fale com a gente e um corretor vai te ajudar a encontrar a
-            melhor opção, no Brasil ou no Paraguai.
+            {PARAGUAI_ATIVO
+              ? "Fale com a gente e um corretor vai te ajudar a encontrar a melhor opção, no Brasil ou no Paraguai."
+              : "Fale com a gente e um corretor vai te ajudar a encontrar a melhor opção em Brasília e região."}
           </p>
           <Link
             href="/contato"

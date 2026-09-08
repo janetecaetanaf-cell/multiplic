@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { PARAGUAI_ATIVO } from "@/lib/config";
 
 export const metadata = {
   title: "Sobre | Multiplic Imóveis",
@@ -14,9 +15,9 @@ export default function SobrePage() {
         A Multiplic Imóveis
       </h1>
       <p className="mt-4 text-brand-gray/70">
-        A Multiplic Imóveis atua com venda de imóveis em Brasília e região,
-        e é parceira comercial da Vierci Development para representar
-        empreendimentos imobiliários no Paraguai.
+        {PARAGUAI_ATIVO
+          ? "A Multiplic Imóveis atua com venda de imóveis em Brasília e região, e é parceira comercial da Vierci Development para representar empreendimentos imobiliários no Paraguai."
+          : "A Multiplic Imóveis atua com venda de imóveis em Brasília e região, com atendimento próximo do início ao fim."}
       </p>
       <div className="mt-8">
         <Link

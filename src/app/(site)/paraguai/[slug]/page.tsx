@@ -4,6 +4,7 @@ import { getEmpreendimentoPorSlug, precoAPartir } from "@/lib/paraguai-data";
 import { formatarPreco } from "@/lib/format";
 import { UnidadesDisponiveis } from "@/components/UnidadesDisponiveis";
 import { GaleriaEmpreendimento } from "@/components/GaleriaEmpreendimento";
+import { PARAGUAI_ATIVO } from "@/lib/config";
 
 export const revalidate = 0;
 
@@ -18,6 +19,8 @@ export default async function EmpreendimentoPage({
 }: {
   params: Promise<{ slug: string }>;
 }) {
+  if (!PARAGUAI_ATIVO) notFound();
+
   const { slug } = await params;
   const empreendimento = await getEmpreendimentoPorSlug(slug);
 
