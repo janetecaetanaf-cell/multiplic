@@ -1,4 +1,5 @@
-import { ImovelDestaque, formatarPreco } from "@/lib/sample-data";
+import { ImovelDestaque } from "@/lib/sample-data";
+import { formatarPreco } from "@/lib/format";
 
 export function PropertyCard({ imovel }: { imovel: ImovelDestaque }) {
   return (

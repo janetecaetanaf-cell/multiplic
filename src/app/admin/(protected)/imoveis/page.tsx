@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
-import { formatarPreco } from "@/lib/sample-data";
+import { formatarPreco } from "@/lib/format";
 import { DeleteButton } from "@/components/admin/DeleteButton";
 
 export const metadata = { title: "Imóveis | Admin Multiplic" };

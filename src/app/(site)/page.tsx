@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { PropertyCard } from "@/components/PropertyCard";
 import { DevelopmentCard } from "@/components/DevelopmentCard";
-import { imoveisDestaque, empreendimentosParaguai } from "@/lib/sample-data";
+import { imoveisDestaque } from "@/lib/sample-data";
+import { getEmpreendimentosPublicados, precoAPartir } from "@/lib/paraguai-data";
 
 const DIFERENCIAIS = [
   {
@@ -18,7 +19,9 @@ const DIFERENCIAIS = [
   },
 ];
 
-export default function Home() {
+export default async function Home() {
+  const empreendimentos = (await getEmpreendimentosPublicados()).slice(0, 4);
+
   return (
     <>
       {/* Hero */}
@@ -105,11 +108,27 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {empreendimentosParaguai.map((emp) => (
-              <DevelopmentCard key={emp.slug} empreendimento={emp} />
-            ))}
-          </div>
+          {empreendimentos.length > 0 ? (
+            <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              {empreendimentos.map((emp) => (
+                <DevelopmentCard
+                  key={emp.slug}
+                  empreendimento={{
+                    slug: emp.slug,
+                    nome: emp.nome,
+                    cidade: emp.cidade,
+                    status: emp.status,
+                    capaUrl: emp.materiais[0]?.url,
+                    precoAPartir: precoAPartir(emp),
+                  }}
+                />
+              ))}
+            </div>
+          ) : (
+            <p className="mt-10 text-white/60">
+              Em breve, novos empreendimentos publicados aqui.
+            </p>
+          )}
         </div>
       </section>
 

@@ -1,6 +1,5 @@
-// Dados de exemplo para montar o layout antes da ligacao com o banco real.
-// O formato ja espelha os modelos do Prisma (Imovel / Empreendimento) para
-// facilitar a troca por dados reais mais tarde.
+// Dados de exemplo para montar o layout dos imoveis do Brasil antes do
+// cadastro real (o Paraguai ja usa dado real do banco - ver paraguai-data.ts).
 
 export type ImovelDestaque = {
   id: string;
@@ -49,29 +48,3 @@ export const imoveisDestaque: ImovelDestaque[] = [
     areaUtil: 55,
   },
 ];
-
-export type Empreendimento = {
-  slug: string;
-  nome: string;
-  cidade: string;
-  status: "EM_CONSTRUCAO" | "PROJETO_NA_PLANTA";
-};
-
-export const empreendimentosParaguai: Empreendimento[] = [
-  { slug: "v-tower-boggiani", nome: "V Tower Boggiani", cidade: "Asunción", status: "EM_CONSTRUCAO" },
-  { slug: "v-tower-riviera", nome: "V Tower Riviera", cidade: "Encarnación", status: "EM_CONSTRUCAO" },
-  { slug: "v-tower-del-lago", nome: "V Tower Del Lago", cidade: "Ciudad del Este", status: "EM_CONSTRUCAO" },
-  { slug: "v-tower-recoleta", nome: "V Tower Recoleta", cidade: "Asunción", status: "EM_CONSTRUCAO" },
-  { slug: "v-tower-mariscal", nome: "V Tower Mariscal", cidade: "Asunción", status: "PROJETO_NA_PLANTA" },
-  { slug: "v-tower-fernando", nome: "V Tower Fernando", cidade: "Fernando de la Mora", status: "EM_CONSTRUCAO" },
-  { slug: "v-residence-pjc", nome: "V Residence Pedro Juan Caballero", cidade: "Pedro Juan Caballero", status: "EM_CONSTRUCAO" },
-  { slug: "v-residence-casablanca", nome: "V Residence Casablanca", cidade: "San Bernardino", status: "PROJETO_NA_PLANTA" },
-];
-
-export function formatarPreco(valor: number, moeda: "BRL" | "USD" = "BRL") {
-  return new Intl.NumberFormat(moeda === "BRL" ? "pt-BR" : "en-US", {
-    style: "currency",
-    currency: moeda,
-    maximumFractionDigits: 0,
-  }).format(valor);
-}

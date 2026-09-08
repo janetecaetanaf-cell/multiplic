@@ -45,6 +45,20 @@ export default async function AdminLayout({
           ))}
         </nav>
 
+        <div className="px-3 pb-3">
+          <Link
+            href="/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 rounded-lg border border-white/10 px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white"
+          >
+            <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={1.8}>
+              <path d="M10 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4M14 4h6v6M20 4 10 14" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            Ver site
+          </Link>
+        </div>
+
         <div className="flex items-center justify-between border-t border-white/10 px-6 py-4">
           <span className="truncate text-xs text-white/50">{session.nome}</span>
           <LogoutButton />
