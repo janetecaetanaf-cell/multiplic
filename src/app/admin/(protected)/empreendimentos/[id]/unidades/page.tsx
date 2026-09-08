@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { UnidadesManager } from "@/components/admin/UnidadesManager";
+import { ImportarUnidadesForm } from "@/components/admin/ImportarUnidadesForm";
 
 export const metadata = { title: "Unidades | Admin Multiplic" };
 
@@ -30,6 +31,8 @@ export default async function UnidadesPage({
       </h1>
 
       <div className="mt-6">
+        <ImportarUnidadesForm empreendimentoId={empreendimento.id} />
+
         <UnidadesManager
           empreendimentoId={empreendimento.id}
           unidadesIniciais={empreendimento.unidades.map((u) => ({
