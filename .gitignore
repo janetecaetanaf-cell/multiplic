@@ -42,5 +42,6 @@ next-env.d.ts
 
 /src/generated/prisma
 
-# arquivos enviados pelo admin (fotos de imoveis, renders, etc.)
-/public/uploads
+# uploads: versionados por enquanto para o primeiro deploy (ver memoria
+# do projeto) - trocar por storage externo (Cloudinary/S3) e voltar a
+# ignorar essa pasta assim que possivel.
