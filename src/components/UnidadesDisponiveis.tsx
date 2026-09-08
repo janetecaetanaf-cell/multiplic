@@ -36,6 +36,7 @@ export function UnidadesDisponiveis({ unidades }: { unidades: UnidadePublica[] }
 
       {aberto && (
         <div className="mt-6 overflow-hidden rounded-2xl border border-black/5 bg-white">
+          <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
             <thead className="bg-neutral-50 text-xs uppercase tracking-wide text-brand-gray/60">
               <tr>
@@ -60,6 +61,7 @@ export function UnidadesDisponiveis({ unidades }: { unidades: UnidadePublica[] }
               ))}
             </tbody>
           </table>
+          </div>
         </div>
       )}
     </div>
