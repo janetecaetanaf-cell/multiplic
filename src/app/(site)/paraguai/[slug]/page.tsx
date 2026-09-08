@@ -5,6 +5,8 @@ import { formatarPreco } from "@/lib/format";
 import { UnidadesDisponiveis } from "@/components/UnidadesDisponiveis";
 import { GaleriaEmpreendimento } from "@/components/GaleriaEmpreendimento";
 
+export const revalidate = 0;
+
 const STATUS_LABEL: Record<string, string> = {
   PROJETO_NA_PLANTA: "Projeto na planta",
   EM_CONSTRUCAO: "Em construção",

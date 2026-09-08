@@ -3,6 +3,12 @@
 import { useState } from "react";
 import Image from "next/image";
 
+// Fotos de material promocional (cartoes/colagens com texto) costumam ser
+// bem mais altas que largas e perder informacao se cortadas (object-cover).
+// Detectamos isso pela proporcao real da imagem, depois de carregada, e
+// trocamos para object-contain (mostra a imagem inteira) so nesses casos.
+const LIMIAR_ALTURA = 1.3;
+
 export function GaleriaEmpreendimento({
   imagens,
   nome,
@@ -11,6 +17,7 @@ export function GaleriaEmpreendimento({
   nome: string;
 }) {
   const [ativo, setAtivo] = useState(0);
+  const [alta, setAlta] = useState<Set<number>>(new Set());
 
   if (imagens.length === 0) {
     return (
@@ -30,6 +37,13 @@ export function GaleriaEmpreendimento({
     setAtivo((i) => (i + 1) % imagens.length);
   }
 
+  function aoCarregar(i: number, e: React.SyntheticEvent<HTMLImageElement>) {
+    const el = e.currentTarget;
+    if (el.naturalWidth && el.naturalHeight / el.naturalWidth > LIMIAR_ALTURA) {
+      setAlta((atual) => (atual.has(i) ? atual : new Set(atual).add(i)));
+    }
+  }
+
   return (
     <div>
       <div className="relative h-[50vh] w-full">
@@ -39,7 +53,8 @@ export function GaleriaEmpreendimento({
           alt={nome}
           fill
           priority
-          className="object-cover"
+          onLoad={(e) => aoCarregar(ativo, e)}
+          className={alta.has(ativo) ? "object-contain" : "object-cover"}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-brand-gray/80 via-transparent to-transparent" />
 
@@ -80,7 +95,13 @@ export function GaleriaEmpreendimento({
                 i === ativo ? "ring-2 ring-white" : "opacity-70 hover:opacity-100"
               }`}
             >
-              <Image src={url} alt="" fill className="object-cover" />
+              <Image
+                src={url}
+                alt=""
+                fill
+                onLoad={(e) => aoCarregar(i, e)}
+                className={alta.has(i) ? "object-contain" : "object-cover"}
+              />
             </button>
           ))}
         </div>

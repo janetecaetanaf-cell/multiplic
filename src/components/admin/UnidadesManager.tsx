@@ -86,15 +86,22 @@ export function UnidadesManager({
 
     // Atualiza a lista local de forma otimista enquanto o refresh do
     // server component nao chega.
+    const atualizada: Omit<Unidade, "id"> = {
+      codigo: form.codigo,
+      andar: form.andar ? Number(form.andar) : null,
+      tipo: form.tipo,
+      areaTotal: form.areaTotal,
+      preco: form.preco,
+      status: form.status,
+    };
+
     if (editandoId) {
       setUnidades((atual) =>
-        atual.map((u) =>
-          u.id === editandoId ? { ...u, ...form, id: editandoId } : u
-        )
+        atual.map((u) => (u.id === editandoId ? { ...atualizada, id: editandoId } : u))
       );
     } else {
       const data = await res.json();
-      setUnidades((atual) => [...atual, { ...form, id: data.id }]);
+      setUnidades((atual) => [...atual, { ...atualizada, id: data.id }]);
     }
   }
 

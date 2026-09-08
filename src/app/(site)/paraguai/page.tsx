@@ -2,6 +2,8 @@ import Link from "next/link";
 import { DevelopmentCard } from "@/components/DevelopmentCard";
 import { getEmpreendimentosPublicados, precoAPartir } from "@/lib/paraguai-data";
 
+export const revalidate = 0;
+
 export const metadata = {
   title: "Empreendimentos no Paraguai | Multiplic Imóveis",
 };

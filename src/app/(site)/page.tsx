@@ -1,8 +1,12 @@
 import Link from "next/link";
 import { PropertyCard } from "@/components/PropertyCard";
 import { DevelopmentCard } from "@/components/DevelopmentCard";
-import { imoveisDestaque } from "@/lib/sample-data";
+import { getImoveisPublicados } from "@/lib/imoveis-data";
 import { getEmpreendimentosPublicados, precoAPartir } from "@/lib/paraguai-data";
+
+// Sempre busca dados atuais - imoveis/empreendimentos cadastrados no
+// admin precisam aparecer no site sem esperar um novo deploy.
+export const revalidate = 0;
 
 const DIFERENCIAIS = [
   {
@@ -21,6 +25,7 @@ const DIFERENCIAIS = [
 
 export default async function Home() {
   const empreendimentos = (await getEmpreendimentosPublicados()).slice(0, 4);
+  const imoveis = (await getImoveisPublicados()).slice(0, 3);
 
   return (
     <>
@@ -77,11 +82,33 @@ export default async function Home() {
           </Link>
         </div>
 
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {imoveisDestaque.map((imovel) => (
-            <PropertyCard key={imovel.id} imovel={imovel} />
-          ))}
-        </div>
+        {imoveis.length > 0 ? (
+          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {imoveis.map((imovel) => (
+              <PropertyCard
+                key={imovel.id}
+                imovel={{
+                  id: imovel.id,
+                  titulo: imovel.titulo,
+                  cidade: imovel.cidade,
+                  estado: imovel.estado,
+                  endereco: imovel.endereco,
+                  preco: Number(imovel.preco),
+                  tipo: imovel.tipo,
+                  quartos: imovel.quartos,
+                  banheiros: imovel.banheiros,
+                  areaUtil: imovel.areaUtil ? Number(imovel.areaUtil) : null,
+                  areaTotal: Number(imovel.areaTotal),
+                  capaUrl: imovel.imagens[0]?.url,
+                }}
+              />
+            ))}
+          </div>
+        ) : (
+          <p className="mt-10 text-brand-gray/60">
+            Em breve, novos imóveis publicados aqui.
+          </p>
+        )}
       </section>
 
       {/* Empreendimentos Paraguai */}

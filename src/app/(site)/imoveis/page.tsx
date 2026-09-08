@@ -1,12 +1,16 @@
 import Link from "next/link";
 import { PropertyCard } from "@/components/PropertyCard";
-import { imoveisDestaque } from "@/lib/sample-data";
+import { getImoveisPublicados } from "@/lib/imoveis-data";
+
+export const revalidate = 0;
 
 export const metadata = {
   title: "Imóveis no Brasil | Multiplic Imóveis",
 };
 
-export default function ImoveisPage() {
+export default async function ImoveisPage() {
+  const imoveis = await getImoveisPublicados();
+
   return (
     <section className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
       <p className="text-sm font-semibold uppercase tracking-widest text-brand-red">
@@ -20,11 +24,33 @@ export default function ImoveisPage() {
         enquanto, fale com a gente para ver a lista completa.
       </p>
 
-      <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {imoveisDestaque.map((imovel) => (
-          <PropertyCard key={imovel.id} imovel={imovel} />
-        ))}
-      </div>
+      {imoveis.length > 0 ? (
+        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {imoveis.map((imovel) => (
+            <PropertyCard
+              key={imovel.id}
+              imovel={{
+                id: imovel.id,
+                titulo: imovel.titulo,
+                cidade: imovel.cidade,
+                estado: imovel.estado,
+                endereco: imovel.endereco,
+                preco: Number(imovel.preco),
+                tipo: imovel.tipo,
+                quartos: imovel.quartos,
+                banheiros: imovel.banheiros,
+                areaUtil: imovel.areaUtil ? Number(imovel.areaUtil) : null,
+                areaTotal: Number(imovel.areaTotal),
+                capaUrl: imovel.imagens[0]?.url,
+              }}
+            />
+          ))}
+        </div>
+      ) : (
+        <p className="mt-10 text-brand-gray/60">
+          Em breve, novos imóveis publicados aqui.
+        </p>
+      )}
 
       <div className="mt-12 text-center">
         <Link
