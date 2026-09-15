@@ -23,19 +23,23 @@ export function ImageUploader({
     setEnviando(true);
 
     const novas: ImagemForm[] = [];
-    for (const file of Array.from(files)) {
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("pasta", pasta);
+    try {
+      for (const file of Array.from(files)) {
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("pasta", pasta);
 
-      const res = await fetch("/api/admin/upload", { method: "POST", body: formData });
-      const data = await res.json();
+        const res = await fetch("/api/admin/upload", { method: "POST", body: formData });
+        const data = await res.json().catch(() => null);
 
-      if (!res.ok) {
-        setErro(data?.erro ?? "Falha ao enviar imagem");
-        continue;
+        if (!res.ok) {
+          setErro(data?.erro ?? "Falha ao enviar imagem");
+          continue;
+        }
+        novas.push({ url: data.url });
       }
-      novas.push({ url: data.url });
+    } catch {
+      setErro("Falha ao enviar imagem - verifique sua conexão e tente de novo");
     }
 
     onChange([...imagens, ...novas]);
