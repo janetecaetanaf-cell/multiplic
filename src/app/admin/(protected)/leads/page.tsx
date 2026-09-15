@@ -7,6 +7,7 @@ const ORIGEM_LABEL: Record<string, string> = {
   SITE_BR: "Site (Brasil)",
   SITE_PY: "Site (Paraguai)",
   WHATSAPP: "WhatsApp",
+  ANABB: "Convênio ANABB",
 };
 
 export default async function AdminLeadsPage() {
@@ -45,8 +46,22 @@ export default async function AdminLeadsPage() {
               <p className="mt-3 text-sm text-brand-gray/80">{lead.mensagem}</p>
             )}
 
+            {lead.matricula && (
+              <p className="mt-1 text-sm text-brand-gray/80">
+                Matrícula/CPF ANABB: <span className="font-medium">{lead.matricula}</span>
+              </p>
+            )}
+
             <div className="mt-3 flex flex-wrap items-center gap-3 text-xs text-brand-gray/50">
-              <span>{ORIGEM_LABEL[lead.origem] ?? lead.origem}</span>
+              <span
+                className={
+                  lead.origem === "ANABB"
+                    ? "rounded-full bg-brand-red/10 px-2 py-0.5 font-semibold text-brand-red"
+                    : ""
+                }
+              >
+                {ORIGEM_LABEL[lead.origem] ?? lead.origem}
+              </span>
               <span>{lead.createdAt.toLocaleString("pt-BR")}</span>
               {lead.imovel && <span>Imóvel: {lead.imovel.titulo}</span>}
               {lead.empreendimento && <span>Empreendimento: {lead.empreendimento.nome}</span>}

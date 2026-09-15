@@ -8,6 +8,7 @@ import { PARAGUAI_ATIVO } from "@/lib/config";
 const NAV_LINKS = [
   { href: "/imoveis", label: "Imóveis no Brasil" },
   ...(PARAGUAI_ATIVO ? [{ href: "/paraguai", label: "Empreendimentos no Paraguai" }] : []),
+  { href: "/convenio-anabb", label: "Convênio ANABB" },
   { href: "/sobre", label: "Sobre" },
   { href: "/contato", label: "Contato" },
 ];

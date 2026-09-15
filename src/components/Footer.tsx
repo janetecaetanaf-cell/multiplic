@@ -32,6 +32,7 @@ export function Footer() {
               {PARAGUAI_ATIVO && (
                 <li><Link href="/paraguai" className="text-white/80 hover:text-white">Empreendimentos no Paraguai</Link></li>
               )}
+              <li><Link href="/convenio-anabb" className="text-white/80 hover:text-white">Convênio ANABB</Link></li>
               <li><Link href="/sobre" className="text-white/80 hover:text-white">Sobre a Multiplic</Link></li>
               <li><Link href="/contato" className="text-white/80 hover:text-white">Contato</Link></li>
             </ul>

@@ -171,6 +171,7 @@ enum OrigemLead {
   SITE_BR
   SITE_PY
   WHATSAPP
+  ANABB
 }
 
 model Lead {
@@ -179,6 +180,7 @@ model Lead {
   telefone         String
   email            String?
   mensagem         String?         @db.Text
+  matricula        String?         // matricula/CPF do associado, so para leads do convenio ANABB
   origem           OrigemLead      @default(SITE_BR)
   atendido         Boolean         @default(false)
   createdAt        DateTime        @default(now())
