@@ -30,7 +30,7 @@ export default async function ImovelPage({
       <div className="mx-auto max-w-4xl px-6 py-12 lg:px-8">
         <p className="text-sm">
           <Link href="/imoveis" className="text-brand-red hover:text-brand-red-dark">
-            ← Imóveis no Brasil
+            ← Imóveis
           </Link>
         </p>
 

@@ -5,7 +5,7 @@ import { getImoveisPublicados } from "@/lib/imoveis-data";
 export const revalidate = 0;
 
 export const metadata = {
-  title: "Imóveis no Brasil | Multiplic Imóveis",
+  title: "Imóveis | Multiplic Imóveis",
 };
 
 export default async function ImoveisPage() {
@@ -14,7 +14,7 @@ export default async function ImoveisPage() {
   return (
     <section className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
       <p className="text-sm font-semibold uppercase tracking-widest text-brand-red">
-        Brasil
+        Brasília e Região
       </p>
       <h1 className="mt-2 font-heading text-3xl font-bold text-brand-gray">
         Imóveis à venda

@@ -28,7 +28,7 @@ export function Footer() {
               Navegação
             </h3>
             <ul className="mt-4 space-y-2 text-sm">
-              <li><Link href="/imoveis" className="text-white/80 hover:text-white">Imóveis no Brasil</Link></li>
+              <li><Link href="/imoveis" className="text-white/80 hover:text-white">Imóveis</Link></li>
               {PARAGUAI_ATIVO && (
                 <li><Link href="/paraguai" className="text-white/80 hover:text-white">Empreendimentos no Paraguai</Link></li>
               )}

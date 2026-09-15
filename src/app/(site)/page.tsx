@@ -101,7 +101,7 @@ export default async function Home() {
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <p className="text-sm font-semibold uppercase tracking-widest text-brand-red">
-              Brasil
+              Brasília e Região
             </p>
             <h2 className="mt-2 font-heading text-3xl font-bold text-brand-gray">
               Imóveis em destaque

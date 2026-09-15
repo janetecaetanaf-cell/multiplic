@@ -6,7 +6,7 @@ import { useState } from "react";
 import { PARAGUAI_ATIVO } from "@/lib/config";
 
 const NAV_LINKS = [
-  { href: "/imoveis", label: "Imóveis no Brasil" },
+  { href: "/imoveis", label: "Imóveis" },
   ...(PARAGUAI_ATIVO ? [{ href: "/paraguai", label: "Empreendimentos no Paraguai" }] : []),
   { href: "/convenio-anabb", label: "Convênio ANABB" },
   { href: "/sobre", label: "Sobre" },
