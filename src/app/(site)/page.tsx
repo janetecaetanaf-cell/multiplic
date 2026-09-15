@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { PropertyCard } from "@/components/PropertyCard";
 import { DevelopmentCard } from "@/components/DevelopmentCard";
 import { getImoveisPublicados } from "@/lib/imoveis-data";
@@ -74,6 +75,26 @@ export default async function Home() {
           </div>
         </div>
       </section>
+
+      {/* Faixa convenio ANABB */}
+      <Link
+        href="/convenio-anabb"
+        className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 border-b border-black/5 bg-neutral-50 px-6 py-3 text-center transition-colors hover:bg-neutral-100"
+      >
+        <span className="flex items-center gap-2">
+          <Image
+            src="/brand/anabb-logo.webp"
+            alt="ANABB"
+            width={175}
+            height={38}
+            className="h-5 w-auto"
+          />
+        </span>
+        <span className="text-sm text-brand-gray">
+          Credenciada ANABB — condições especiais para associados
+        </span>
+        <span className="text-sm font-semibold text-brand-red">Saiba mais →</span>
+      </Link>
 
       {/* Imoveis em destaque */}
       <section className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
