@@ -13,7 +13,7 @@ const BENEFICIOS = [
   },
   {
     titulo: "Condições especiais",
-    texto: "Benefícios exclusivos para associados ANABB e funcionários do Banco do Brasil.",
+    texto: "Benefícios exclusivos para associados ANABB.",
   },
   {
     titulo: "Atendimento próximo",
@@ -51,8 +51,7 @@ export default function ConvenioAnabbPage() {
             para você.
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-white/70">
-            Condições especiais para associados ANABB e funcionários do
-            Banco do Brasil.
+            Condições especiais exclusivas para associados ANABB.
           </p>
           <a
             href={linkWhatsapp(
