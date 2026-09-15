@@ -14,11 +14,24 @@ export default function SobrePage() {
       <h1 className="mt-2 font-heading text-3xl font-bold text-brand-gray">
         A Multiplic Imóveis
       </h1>
-      <p className="mt-4 text-brand-gray/70">
-        {PARAGUAI_ATIVO
-          ? "A Multiplic Imóveis atua com venda de imóveis em Brasília e região, e é parceira comercial da Vierci Development para representar empreendimentos imobiliários no Paraguai."
-          : "A Multiplic Imóveis atua com venda de imóveis em Brasília e região, com atendimento personalizado do início ao fim."}
-      </p>
+      <div className="mt-4 space-y-4 text-brand-gray/70">
+        <p>
+          A Multiplic Imóveis atua no mercado imobiliário de Brasília e
+          região há mais de 25 anos, com atendimento personalizado
+          durante todo o processo de compra e venda
+          {PARAGUAI_ATIVO
+            ? " e é parceira comercial da Vierci Development para representar empreendimentos imobiliários no Paraguai"
+            : ""}
+          . Nossa corretora responsável é avaliadora e perita judicial,
+          o que garante segurança e critério em cada avaliação e
+          negociação.
+        </p>
+        <p>
+          Todas as visitas aos imóveis são agendadas e o cliente sempre
+          é acompanhado por um corretor. Do primeiro contato até a
+          assinatura do contrato, Multiplic — sinônimo de bons negócios!
+        </p>
+      </div>
       <div className="mt-8">
         <Link
           href="/contato"
