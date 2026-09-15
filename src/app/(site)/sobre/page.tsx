@@ -17,7 +17,7 @@ export default function SobrePage() {
       <p className="mt-4 text-brand-gray/70">
         {PARAGUAI_ATIVO
           ? "A Multiplic Imóveis atua com venda de imóveis em Brasília e região, e é parceira comercial da Vierci Development para representar empreendimentos imobiliários no Paraguai."
-          : "A Multiplic Imóveis atua com venda de imóveis em Brasília e região, com atendimento próximo do início ao fim."}
+          : "A Multiplic Imóveis atua com venda de imóveis em Brasília e região, com atendimento personalizado do início ao fim."}
       </p>
       <div className="mt-8">
         <Link
