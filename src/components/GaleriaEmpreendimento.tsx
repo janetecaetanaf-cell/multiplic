@@ -3,12 +3,6 @@
 import { useState } from "react";
 import Image from "next/image";
 
-// Fotos de material promocional (cartoes/colagens com texto) costumam ser
-// bem mais altas que largas e perder informacao se cortadas (object-cover).
-// Detectamos isso pela proporcao real da imagem, depois de carregada, e
-// trocamos para object-contain (mostra a imagem inteira) so nesses casos.
-const LIMIAR_ALTURA = 1.3;
-
 export function GaleriaEmpreendimento({
   imagens,
   nome,
@@ -17,7 +11,6 @@ export function GaleriaEmpreendimento({
   nome: string;
 }) {
   const [ativo, setAtivo] = useState(0);
-  const [alta, setAlta] = useState<Set<number>>(new Set());
 
   if (imagens.length === 0) {
     return (
@@ -37,15 +30,11 @@ export function GaleriaEmpreendimento({
     setAtivo((i) => (i + 1) % imagens.length);
   }
 
-  function aoCarregar(i: number, e: React.SyntheticEvent<HTMLImageElement>) {
-    const el = e.currentTarget;
-    if (el.naturalWidth && el.naturalHeight / el.naturalWidth > LIMIAR_ALTURA) {
-      setAlta((atual) => (atual.has(i) ? atual : new Set(atual).add(i)));
-    }
-  }
-
   return (
     <div>
+      {/* object-contain: cada foto aparece inteira e proporcional dentro da
+          mesma area, sem cortar - fotos de tamanhos/proporcoes diferentes
+          (retrato, paisagem, colagens) ficam consistentes entre si. */}
       <div className="relative h-[50vh] w-full">
         <Image
           key={imagens[ativo]}
@@ -53,10 +42,9 @@ export function GaleriaEmpreendimento({
           alt={nome}
           fill
           priority
-          onLoad={(e) => aoCarregar(ativo, e)}
-          className={alta.has(ativo) ? "object-contain" : "object-cover"}
+          className="object-contain"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-brand-gray/80 via-transparent to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-brand-gray/80 via-transparent to-transparent" />
 
         {imagens.length > 1 && (
           <>
@@ -91,17 +79,11 @@ export function GaleriaEmpreendimento({
               key={url}
               type="button"
               onClick={() => setAtivo(i)}
-              className={`relative h-24 overflow-hidden rounded-lg transition-opacity ${
-                i === ativo ? "ring-2 ring-white" : "opacity-70 hover:opacity-100"
+              className={`relative h-24 overflow-hidden rounded-lg bg-black/5 transition-opacity ${
+                i === ativo ? "ring-2 ring-brand-red" : "opacity-70 hover:opacity-100"
               }`}
             >
-              <Image
-                src={url}
-                alt=""
-                fill
-                onLoad={(e) => aoCarregar(i, e)}
-                className={alta.has(i) ? "object-contain" : "object-cover"}
-              />
+              <Image src={url} alt="" fill className="object-contain" />
             </button>
           ))}
         </div>
