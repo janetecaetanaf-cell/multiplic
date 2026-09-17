@@ -34,7 +34,7 @@ export default async function Home() {
   const empreendimentos = PARAGUAI_ATIVO
     ? (await getEmpreendimentosPublicados()).slice(0, 4)
     : [];
-  const imoveis = (await getImoveisPublicados()).slice(0, 3);
+  const imoveis = (await getImoveisPublicados()).slice(0, 6);
 
   return (
     <>
