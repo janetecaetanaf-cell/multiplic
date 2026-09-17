@@ -50,12 +50,12 @@ export default async function Home() {
           <h1 className="mt-4 max-w-2xl font-heading text-4xl font-bold leading-tight text-white sm:text-5xl">
             {PARAGUAI_ATIVO
               ? "Imóveis no Brasil e no Paraguai, tudo em um só lugar"
-              : "Seu imóvel ideal em Brasília e região"}
+              : "Sua imobiliária em Brasília e Região"}
           </h1>
           <p className="mt-6 max-w-xl text-lg text-white/70">
             {PARAGUAI_ATIVO
               ? "Encontre o imóvel ideal em Brasília e região, ou invista em lançamentos imobiliários no Paraguai com o respaldo de uma parceria internacional."
-              : "Encontre o imóvel ideal em Brasília e região com o acompanhamento de um corretor de confiança."}
+              : "Para comprar, vender ou investir, fale com um corretor de confiança."}
           </p>
           <div className="mt-10 flex flex-wrap gap-4">
             <Link
