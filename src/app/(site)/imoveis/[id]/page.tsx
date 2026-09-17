@@ -88,6 +88,25 @@ export default async function ImovelPage({
           </p>
         )}
 
+        <div className="mt-8">
+          <h2 className="font-heading text-lg font-semibold text-brand-gray">
+            Localização aproximada
+          </h2>
+          <div className="mt-3 overflow-hidden rounded-2xl border border-black/5">
+            <iframe
+              src={`https://www.google.com/maps?q=${encodeURIComponent(
+                `${imovel.cidade} - ${imovel.estado}`
+              )}&output=embed`}
+              width="100%"
+              height="320"
+              style={{ border: 0 }}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title={`Localização de ${imovel.titulo}`}
+            />
+          </div>
+        </div>
+
         {imovel.caracteristicas.length > 0 && (
           <div className="mt-8">
             <h2 className="font-heading text-lg font-semibold text-brand-gray">
