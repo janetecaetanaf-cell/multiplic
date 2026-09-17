@@ -65,26 +65,13 @@ export function GaleriaEmpreendimento({
                 <path d="M9 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </button>
+
+            <span className="absolute bottom-4 right-4 rounded-full bg-black/50 px-3 py-1 text-xs font-medium text-white">
+              {ativo + 1} / {imagens.length}
+            </span>
           </>
         )}
       </div>
-
-      {imagens.length > 1 && (
-        <div className="mx-auto grid max-w-7xl grid-cols-4 gap-2 px-6 pb-6 lg:px-8">
-          {imagens.map((url, i) => (
-            <button
-              key={url}
-              type="button"
-              onClick={() => setAtivo(i)}
-              className={`relative h-24 overflow-hidden rounded-lg bg-black/5 transition-opacity ${
-                i === ativo ? "ring-2 ring-brand-red" : "opacity-70 hover:opacity-100"
-              }`}
-            >
-              <Image src={url} alt="" fill className="object-cover" />
-            </button>
-          ))}
-        </div>
-      )}
     </div>
   );
 }
