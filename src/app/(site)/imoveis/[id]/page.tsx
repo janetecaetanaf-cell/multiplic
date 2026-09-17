@@ -38,6 +38,11 @@ export default async function ImovelPage({
           <span className="rounded-full bg-brand-red/10 px-3 py-1 text-xs font-semibold text-brand-red">
             {imovel.tipo}
           </span>
+          {imovel.finalidade === "ALUGUEL" && (
+            <span className="rounded-full bg-brand-gray/10 px-3 py-1 text-xs font-semibold text-brand-gray">
+              Aluguel
+            </span>
+          )}
           <span className="text-sm text-brand-gray/60">
             {imovel.endereco} · {imovel.cidade}/{imovel.estado}
           </span>
@@ -49,6 +54,9 @@ export default async function ImovelPage({
 
         <p className="mt-3 text-xl font-semibold text-brand-gray">
           {formatarPreco(Number(imovel.preco))}
+          {imovel.finalidade === "ALUGUEL" && (
+            <span className="text-base font-medium text-brand-gray/60"> /mês</span>
+          )}
         </p>
 
         <dl className="mt-6 flex flex-wrap gap-6 border-y border-black/5 py-5 text-sm text-brand-gray/70">

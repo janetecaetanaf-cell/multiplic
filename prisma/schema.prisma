@@ -31,27 +31,33 @@ model Usuario {
   @@index([codigoReferencia])
 }
 
+enum Finalidade {
+  VENDA
+  ALUGUEL
+}
+
 model Imovel {
-  id            String   @id @default(cuid())
+  id            String     @id @default(cuid())
   titulo        String
-  descricao     String?  @db.Text
+  descricao     String?    @db.Text
   endereco      String
   cidade        String
-  estado        String   @db.VarChar(2)
-  cep           String?  @db.VarChar(10)
-  preco         Decimal  @db.Decimal(12, 2)
-  moeda         String   @default("BRL") @db.VarChar(3)
-  tipo          String   // Casa, Apartamento, Terreno, etc.
-  quartos       Int      @default(0)
-  suites        Int      @default(0)
-  banheiros     Int      @default(0)
-  areaUtil      Decimal? @db.Decimal(10, 2)
-  areaTotal     Decimal  @db.Decimal(10, 2)
-  vagas         Int      @default(0)
-  destaque      Boolean  @default(false)
-  disponivel    Boolean  @default(true)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  estado        String     @db.VarChar(2)
+  cep           String?    @db.VarChar(10)
+  preco         Decimal    @db.Decimal(12, 2)
+  moeda         String     @default("BRL") @db.VarChar(3)
+  finalidade    Finalidade @default(VENDA)
+  tipo          String     // Casa, Apartamento, Terreno, etc.
+  quartos       Int        @default(0)
+  suites        Int        @default(0)
+  banheiros     Int        @default(0)
+  areaUtil      Decimal?   @db.Decimal(10, 2)
+  areaTotal     Decimal    @db.Decimal(10, 2)
+  vagas         Int        @default(0)
+  destaque      Boolean    @default(false)
+  disponivel    Boolean    @default(true)
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
 
   imagens         ImagemImovel[]
   caracteristicas ImovelCaracteristica[]
@@ -61,6 +67,7 @@ model Imovel {
   @@index([cidade])
   @@index([destaque])
   @@index([disponivel])
+  @@index([finalidade])
 }
 
 model ImagemImovel {

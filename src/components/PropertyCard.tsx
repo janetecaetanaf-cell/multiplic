@@ -9,6 +9,7 @@ export type ImovelCard = {
   estado: string;
   endereco: string;
   preco: number;
+  finalidade: "VENDA" | "ALUGUEL";
   tipo: string;
   quartos: number;
   banheiros: number;
@@ -41,6 +42,11 @@ export function PropertyCard({ imovel }: { imovel: ImovelCard }) {
         <span className="absolute left-4 top-4 rounded-full bg-brand-red px-3 py-1 text-xs font-semibold text-white">
           {imovel.tipo}
         </span>
+        {imovel.finalidade === "ALUGUEL" && (
+          <span className="absolute right-4 top-4 rounded-full bg-brand-gray px-3 py-1 text-xs font-semibold text-white">
+            Aluguel
+          </span>
+        )}
       </div>
 
       <div className="p-5">
@@ -53,6 +59,9 @@ export function PropertyCard({ imovel }: { imovel: ImovelCard }) {
 
         <p className="mt-3 text-xl font-bold text-brand-gray">
           {formatarPreco(imovel.preco)}
+          {imovel.finalidade === "ALUGUEL" && (
+            <span className="text-sm font-medium text-brand-gray/60"> /mês</span>
+          )}
         </p>
 
         <dl className="mt-4 flex gap-4 border-t border-black/5 pt-4 text-sm text-brand-gray/70">

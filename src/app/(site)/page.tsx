@@ -127,6 +127,7 @@ export default async function Home() {
                   estado: imovel.estado,
                   endereco: imovel.endereco,
                   preco: Number(imovel.preco),
+                  finalidade: imovel.finalidade,
                   tipo: imovel.tipo,
                   quartos: imovel.quartos,
                   banheiros: imovel.banheiros,

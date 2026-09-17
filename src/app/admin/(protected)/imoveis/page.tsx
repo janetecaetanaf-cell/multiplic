@@ -27,6 +27,7 @@ export default async function AdminImoveisPage() {
             <tr>
               <th className="px-5 py-3">Título</th>
               <th className="px-5 py-3">Cidade</th>
+              <th className="px-5 py-3">Finalidade</th>
               <th className="px-5 py-3">Preço</th>
               <th className="px-5 py-3">Status</th>
               <th className="px-5 py-3" />
@@ -38,7 +39,11 @@ export default async function AdminImoveisPage() {
                 <td className="px-5 py-3 font-medium text-brand-gray">{imovel.titulo}</td>
                 <td className="px-5 py-3 text-brand-gray/70">{imovel.cidade}</td>
                 <td className="px-5 py-3 text-brand-gray/70">
+                  {imovel.finalidade === "ALUGUEL" ? "Aluguel" : "Venda"}
+                </td>
+                <td className="px-5 py-3 text-brand-gray/70">
                   {formatarPreco(Number(imovel.preco))}
+                  {imovel.finalidade === "ALUGUEL" && "/mês"}
                 </td>
                 <td className="px-5 py-3">
                   <span
@@ -70,7 +75,7 @@ export default async function AdminImoveisPage() {
 
             {imoveis.length === 0 && (
               <tr>
-                <td colSpan={5} className="px-5 py-8 text-center text-brand-gray/50">
+                <td colSpan={6} className="px-5 py-8 text-center text-brand-gray/50">
                   Nenhum imóvel cadastrado ainda.
                 </td>
               </tr>

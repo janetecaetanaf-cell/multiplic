@@ -1,3 +1,5 @@
+import type { Finalidade } from "@prisma/client";
+
 export function parseImovelInput(body: Record<string, unknown>) {
   const str = (v: unknown) => (typeof v === "string" ? v.trim() : "");
   const num = (v: unknown) => (v === "" || v === undefined || v === null ? null : Number(v));
@@ -14,6 +16,7 @@ export function parseImovelInput(body: Record<string, unknown>) {
     estado: str(body.estado).toUpperCase(),
     cep: str(body.cep) || null,
     preco: num(body.preco) ?? 0,
+    finalidade: (body.finalidade === "ALUGUEL" ? "ALUGUEL" : "VENDA") as Finalidade,
     tipo: str(body.tipo),
     quartos: num(body.quartos) ?? 0,
     suites: num(body.suites) ?? 0,

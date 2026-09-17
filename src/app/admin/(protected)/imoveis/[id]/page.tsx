@@ -31,6 +31,7 @@ export default async function EditarImovelPage({
             estado: imovel.estado,
             cep: imovel.cep ?? "",
             preco: String(imovel.preco),
+            finalidade: imovel.finalidade,
             tipo: imovel.tipo,
             quartos: String(imovel.quartos),
             suites: String(imovel.suites),

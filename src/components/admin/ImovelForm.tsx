@@ -13,6 +13,7 @@ export type ImovelFormValues = {
   estado: string;
   cep: string;
   preco: string;
+  finalidade: "VENDA" | "ALUGUEL";
   tipo: string;
   quartos: string;
   suites: string;
@@ -33,6 +34,7 @@ const VAZIO: ImovelFormValues = {
   estado: "",
   cep: "",
   preco: "",
+  finalidade: "VENDA",
   tipo: "Apartamento",
   quartos: "0",
   suites: "0",
@@ -154,6 +156,18 @@ export function ImovelForm({ valoresIniciais }: { valoresIniciais?: ImovelFormVa
 
       <div className="grid gap-4 sm:grid-cols-3">
         <div>
+          <label className="block text-sm font-medium text-brand-gray">Finalidade</label>
+          <select
+            value={valores.finalidade}
+            onChange={(e) => set("finalidade", e.target.value as "VENDA" | "ALUGUEL")}
+            className="mt-1 w-full rounded-lg border border-black/10 px-4 py-2.5"
+          >
+            <option value="VENDA">Venda</option>
+            <option value="ALUGUEL">Aluguel</option>
+          </select>
+        </div>
+
+        <div>
           <label className="block text-sm font-medium text-brand-gray">Tipo</label>
           <select
             value={valores.tipo}
@@ -168,7 +182,9 @@ export function ImovelForm({ valoresIniciais }: { valoresIniciais?: ImovelFormVa
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-brand-gray">Preço (R$)</label>
+          <label className="block text-sm font-medium text-brand-gray">
+            Preço (R${valores.finalidade === "ALUGUEL" ? "/mês" : ""})
+          </label>
           <input
             required
             type="number"

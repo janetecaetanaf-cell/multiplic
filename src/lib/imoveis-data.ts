@@ -4,9 +4,9 @@ const INCLUDE_PADRAO = {
   imagens: { orderBy: { ordem: "asc" as const } },
 };
 
-export async function getImoveisPublicados() {
+export async function getImoveisPublicados(finalidade?: "VENDA" | "ALUGUEL") {
   return prisma.imovel.findMany({
-    where: { disponivel: true },
+    where: { disponivel: true, ...(finalidade ? { finalidade } : {}) },
     orderBy: [{ destaque: "desc" }, { createdAt: "desc" }],
     include: INCLUDE_PADRAO,
   });
