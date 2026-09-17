@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { getImovelPorId } from "@/lib/imoveis-data";
 import { formatarPreco } from "@/lib/format";
 import { GaleriaEmpreendimento } from "@/components/GaleriaEmpreendimento";
+import { MapaLocalizacao } from "@/components/MapaLocalizacao";
 
 export const revalidate = 0;
 
@@ -93,16 +94,9 @@ export default async function ImovelPage({
             Localização aproximada
           </h2>
           <div className="mt-3 overflow-hidden rounded-2xl border border-black/5">
-            <iframe
-              src={`https://www.google.com/maps?q=${encodeURIComponent(
-                `${imovel.endereco}, ${imovel.cidade} - ${imovel.estado}`
-              )}&output=embed`}
-              width="100%"
-              height="320"
-              style={{ border: 0 }}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              title={`Localização de ${imovel.titulo}`}
+            <MapaLocalizacao
+              query={`${imovel.endereco}, ${imovel.cidade} - ${imovel.estado}`}
+              titulo={imovel.titulo}
             />
           </div>
         </div>
