@@ -83,7 +83,7 @@ export function GaleriaEmpreendimento({
                 i === ativo ? "ring-2 ring-brand-red" : "opacity-70 hover:opacity-100"
               }`}
             >
-              <Image src={url} alt="" fill className="object-contain" />
+              <Image src={url} alt="" fill className="object-cover" />
             </button>
           ))}
         </div>
