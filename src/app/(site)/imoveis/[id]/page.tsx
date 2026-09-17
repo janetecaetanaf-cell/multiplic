@@ -95,7 +95,7 @@ export default async function ImovelPage({
           <div className="mt-3 overflow-hidden rounded-2xl border border-black/5">
             <iframe
               src={`https://www.google.com/maps?q=${encodeURIComponent(
-                `${imovel.cidade} - ${imovel.estado}`
+                `${imovel.endereco}, ${imovel.cidade} - ${imovel.estado}`
               )}&output=embed`}
               width="100%"
               height="320"
