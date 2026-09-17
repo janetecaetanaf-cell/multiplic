@@ -32,9 +32,6 @@ export function GaleriaEmpreendimento({
 
   return (
     <div>
-      {/* object-contain: cada foto aparece inteira e proporcional dentro da
-          mesma area, sem cortar - fotos de tamanhos/proporcoes diferentes
-          (retrato, paisagem, colagens) ficam consistentes entre si. */}
       <div className="relative h-[50vh] w-full">
         <Image
           key={imagens[ativo]}
@@ -42,7 +39,7 @@ export function GaleriaEmpreendimento({
           alt={nome}
           fill
           priority
-          className="object-contain"
+          className="object-cover"
         />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-brand-gray/80 via-transparent to-transparent" />
 
