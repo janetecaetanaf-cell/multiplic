@@ -32,7 +32,7 @@ export function GaleriaEmpreendimento({
 
   return (
     <div>
-      <div className="relative h-[50vh] w-full">
+      <div className="relative mx-auto aspect-[16/9] w-full max-w-5xl">
         <Image
           key={imagens[ativo]}
           src={imagens[ativo]}
