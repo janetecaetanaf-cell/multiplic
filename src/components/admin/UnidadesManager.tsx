@@ -67,41 +67,45 @@ export function UnidadesManager({
     const url = editandoId ? `/api/admin/unidades/${editandoId}` : "/api/admin/unidades";
     const method = editandoId ? "PUT" : "POST";
 
-    const res = await fetch(url, {
-      method,
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...form, empreendimentoId }),
-    });
+    try {
+      const res = await fetch(url, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...form, empreendimentoId }),
+      });
 
-    setSalvando(false);
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        setErro(data?.erro ?? "Não foi possível salvar");
+        return;
+      }
 
-    if (!res.ok) {
-      const data = await res.json().catch(() => null);
-      setErro(data?.erro ?? "Não foi possível salvar");
-      return;
-    }
+      cancelarEdicao();
+      router.refresh();
 
-    cancelarEdicao();
-    router.refresh();
+      // Atualiza a lista local de forma otimista enquanto o refresh do
+      // server component nao chega.
+      const atualizada: Omit<Unidade, "id"> = {
+        codigo: form.codigo,
+        andar: form.andar ? Number(form.andar) : null,
+        tipo: form.tipo,
+        areaTotal: form.areaTotal,
+        preco: form.preco,
+        status: form.status,
+      };
 
-    // Atualiza a lista local de forma otimista enquanto o refresh do
-    // server component nao chega.
-    const atualizada: Omit<Unidade, "id"> = {
-      codigo: form.codigo,
-      andar: form.andar ? Number(form.andar) : null,
-      tipo: form.tipo,
-      areaTotal: form.areaTotal,
-      preco: form.preco,
-      status: form.status,
-    };
-
-    if (editandoId) {
-      setUnidades((atual) =>
-        atual.map((u) => (u.id === editandoId ? { ...atualizada, id: editandoId } : u))
-      );
-    } else {
-      const data = await res.json();
-      setUnidades((atual) => [...atual, { ...atualizada, id: data.id }]);
+      if (editandoId) {
+        setUnidades((atual) =>
+          atual.map((u) => (u.id === editandoId ? { ...atualizada, id: editandoId } : u))
+        );
+      } else {
+        const data = await res.json();
+        setUnidades((atual) => [...atual, { ...atualizada, id: data.id }]);
+      }
+    } catch {
+      setErro("Não foi possível salvar - verifique sua conexão e tente de novo");
+    } finally {
+      setSalvando(false);
     }
   }
 

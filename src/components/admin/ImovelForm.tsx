@@ -67,22 +67,26 @@ export function ImovelForm({ valoresIniciais }: { valoresIniciais?: ImovelFormVa
     const url = editando ? `/api/admin/imoveis/${valores.id}` : "/api/admin/imoveis";
     const method = editando ? "PUT" : "POST";
 
-    const res = await fetch(url, {
-      method,
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(valores),
-    });
+    try {
+      const res = await fetch(url, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(valores),
+      });
 
-    setSalvando(false);
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        setErro(data?.erro ?? "Não foi possível salvar");
+        return;
+      }
 
-    if (!res.ok) {
-      const data = await res.json().catch(() => null);
-      setErro(data?.erro ?? "Não foi possível salvar");
-      return;
+      router.push("/admin/imoveis");
+      router.refresh();
+    } catch {
+      setErro("Não foi possível salvar - verifique sua conexão e tente de novo");
+    } finally {
+      setSalvando(false);
     }
-
-    router.push("/admin/imoveis");
-    router.refresh();
   }
 
   return (
@@ -178,6 +182,7 @@ export function ImovelForm({ valoresIniciais }: { valoresIniciais?: ImovelFormVa
             <option>Casa</option>
             <option>Terreno</option>
             <option>Comercial</option>
+            <option>Prédio/Edifício</option>
           </select>
         </div>
 
