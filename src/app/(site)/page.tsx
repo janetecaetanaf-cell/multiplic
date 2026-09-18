@@ -30,11 +30,20 @@ const DIFERENCIAIS = [
   },
 ];
 
+function sortearAmostra<T>(itens: T[], quantidade: number): T[] {
+  const embaralhado = [...itens];
+  for (let i = embaralhado.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [embaralhado[i], embaralhado[j]] = [embaralhado[j], embaralhado[i]];
+  }
+  return embaralhado.slice(0, quantidade);
+}
+
 export default async function Home() {
   const empreendimentos = PARAGUAI_ATIVO
     ? (await getEmpreendimentosPublicados()).slice(0, 4)
     : [];
-  const imoveis = (await getImoveisPublicados()).slice(0, 6);
+  const imoveis = sortearAmostra(await getImoveisPublicados(), 6);
 
   return (
     <>
